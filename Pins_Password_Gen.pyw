@@ -6,7 +6,8 @@ import pyperclip as pclip
 BACKGROUND = "#FFFFFF"  # Original color: E9E6FF, FFFFFF
 FOREGROUND = "#3B413C"  # Original color: 706993, 3B413C
 HIGHLIGHT = "#D6D6D6"  # Original color: 43484B, D6D6D6
-WINGEOMETRY = "420x150+725+350"  # WidthxHeight+X+Y
+WINGEOMETRY = "420x150+730+350"  # WidthxHeight+X+Y
+BUTTONBORD = "groove"
 
 def gen_passw(length=8, text=f" has been copied to clipboard"):
     options = ascii_uppercase + ascii_lowercase + digits + punctuation
@@ -38,7 +39,7 @@ def font_resize(event):
         lengthDescriber["font"] = font.Font(size=10)
         lengthInput["font"] = font.Font(size=8)
     elif event.width in range(620, 820):
-        genButton["font"] = font.Font(size=32)
+        genButton["font"] = font.Font(size=16)
         passwDisplay["font"] = font.Font(size=14)
         customGenButton["font"] = font.Font(size=18)
         lengthDescriber["font"] = font.Font(size=15)
@@ -71,7 +72,7 @@ passwDisplay = tk.Label(
     root, text="Password appears here (Character limit of 8-20)",
      bg=BACKGROUND, fg=FOREGROUND
      )
-passwDisplay.place(anchor="n", relx=0.5, relwidth=1)
+passwDisplay.place(anchor="n", relx=0.5, rely=0.06, relwidth=1)
 passwDisplay["font"] = 10
 
 # Button for generation
@@ -79,14 +80,14 @@ genButton = tk.Button(
     root, text="Generate Password",
     bd=2, bg=BACKGROUND, fg=FOREGROUND,
     command=gen_passw, activebackground=HIGHLIGHT,
-    activeforeground=FOREGROUND,
+    activeforeground=FOREGROUND, relief=BUTTONBORD
     )
 genButton["font"] = font.Font(size=16)
-genButton.place(anchor="n", relx=0.5, rely=0.5, relwidth=1, relheight=0.55)
+genButton.place(anchor="n", relx=0.5, rely=0.5, relwidth=1, relheight=0.48)
 
 # Custom length entry & label
 lengthInput = tk.Entry(root, bg="#FFFFFF", width=22)
-lengthInput.place(anchor="n", relx=0.5, rely=0.28, relwidth=0.30, relheight=0.15)
+lengthInput.place(anchor="n", relx=0.5, rely=0.28, relwidth=0.30, relheight=0.16)
 
 # Label for Entry.
 lengthDescriber = tk.Label(root, bg=BACKGROUND, fg=FOREGROUND, width=18, text="Enter a desired length: ")
@@ -97,8 +98,8 @@ customGenButton = tk.Button(
     root, bd=2, bg=BACKGROUND, fg=FOREGROUND,
     text="Generate (Custom)", command=custom_len_gen,
     width=19, activebackground=HIGHLIGHT,
-    activeforeground=FOREGROUND
+    activeforeground=FOREGROUND, relief=BUTTONBORD
     )
-customGenButton.place(anchor="e", relx=0.999, rely=0.355, relwidth=0.34, relheight=0.16)
+customGenButton.place(anchor="e", relx=0.999, rely=0.36, relwidth=0.34, relheight=0.16)
 
 root.mainloop()
