@@ -3,9 +3,9 @@ import random
 import tkinter as tk
 import tkinter.font as font
 import pyperclip as pclip
-BACKGROUND = "#252323"  # Original color: E9E6FF, 393E41
-FOREGROUND = "#F5F1ED"  # Original color: 706993, D3D0CB
-HIGHLIGHT = "#858DFF"  # Original color: 43484B
+BACKGROUND = "#FFFFFF"  # Original color: E9E6FF, FFFFFF
+FOREGROUND = "#3B413C"  # Original color: 706993, 3B413C
+HIGHLIGHT = "#D6D6D6"  # Original color: 43484B, D6D6D6
 
 def gen_pass(length=8):
     options = ascii_uppercase + ascii_lowercase + digits + punctuation
@@ -37,7 +37,7 @@ def font_resize(event):
         customGen["font"] = font.Font(size=10)
         lengthDescriber["font"] = font.Font(size=10)
         lengthInput["font"] = font.Font(size=8)
-    elif event.width in range(800, 1200):
+    elif event.width in range(600, 1200):
         genButton["font"] = font.Font(size=32)
         passDisplay["font"] = font.Font(size=24)
         customGen["font"] = font.Font(size=24)
