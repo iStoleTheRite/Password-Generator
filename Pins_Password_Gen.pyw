@@ -5,6 +5,9 @@ import tkinter.font as font
 import pyperclip as pclip
 BACKGROUND = "#FFFFFF"  # Original color: E9E6FF, FFFFFF
 FOREGROUND = "#3B413C"  # Original color: 706993, 3B413C
+PRVBACKGROUND = "#222725"
+PRVFOREGROUND = "#7D94B5"
+PRVHIGHLIGHT = "#BDD5EA"
 HIGHLIGHT = "#D6D6D6"  # Original color: NONE, D6D6D6
 WINGEOMETRY = "420x150+730+350"  # WidthxHeight+X+Y
 BORD = "groove"
@@ -16,9 +19,12 @@ def gen_passw(length=8, text=f" has been copied to clipboard"):
     passwDisplay.config(text=f"{generatedPW}"+text)
 
 def custom_len_gen():
+    logFile = open("log.txt", "a")
     userLength = lengthInput.get()
     try:
         if int(userLength) > 20 or int(userLength) < 8:
+            logFile.write(f"User tried to use a length of {userLength}\n\n")
+            logFile.close()
             gen_passw()
         else:
             gen_passw(int(userLength))
@@ -26,30 +32,68 @@ def custom_len_gen():
         if userLength == "":
             gen_passw()
         else:
-            logFile = open("log.txt", "a")
             logFile.write(f"Error: {e}\n\n")
             logFile.close()
             gen_passw(text=" has been copied to clipboard using default length (8)")
 
 def font_resize(event):
     if event.width in range(420, 620):
-        genButton["font"] = font.Font(size=16)
+        #genButton["font"] = font.Font(size=16)
         passwDisplay["font"] = font.Font(size=10)
-        customGenButton["font"] = font.Font(size=10)
+        GenButton["font"] = font.Font(size=10)
         lengthDescriber["font"] = font.Font(size=10)
         lengthInput["font"] = font.Font(size=8)
+        origButton["font"] = font.Font(size=8)
+        defaultButton["font"] = font.Font(size=8)
     elif event.width in range(620, 820):
-        genButton["font"] = font.Font(size=16)
+        #genButton["font"] = font.Font(size=16)
         passwDisplay["font"] = font.Font(size=14)
-        customGenButton["font"] = font.Font(size=18)
+        GenButton["font"] = font.Font(size=18)
         lengthDescriber["font"] = font.Font(size=15)
         lengthInput["font"] = font.Font(size=18)
+        origButton["font"] = font.Font(size=18)
+        defaultButton["font"] = font.Font(size=18)
     elif event.width > 820:
-        genButton["font"] = font.Font(size=32)
+        #genButton["font"] = font.Font(size=32)
         passwDisplay["font"] = font.Font(size=18)
-        customGenButton["font"] = font.Font(size=18)
+        GenButton["font"] = font.Font(size=18)
         lengthDescriber["font"] = font.Font(size=16)
         lengthInput["font"] = font.Font(size=20)
+        origButton["font"] = font.Font(size=20)
+        defaultButton["font"] = font.Font(size=20)
+
+def orig_col():
+    root.configure(bg=PRVBACKGROUND)
+    passwDisplay.configure(bg=PRVBACKGROUND)
+    lengthDescriber.configure(bg=PRVBACKGROUND)
+    GenButton.configure(bg=PRVBACKGROUND)
+    origButton.configure(bg=PRVBACKGROUND)
+    defaultButton.configure(bg=PRVBACKGROUND)
+    origButton.configure(fg=PRVFOREGROUND)
+    GenButton.configure(fg=PRVFOREGROUND)
+    lengthDescriber.configure(fg=PRVFOREGROUND)
+    passwDisplay.configure(fg=PRVFOREGROUND)
+    defaultButton.configure(fg=PRVFOREGROUND)
+    GenButton.configure(activebackground=PRVHIGHLIGHT)
+    origButton.configure(activebackground=PRVHIGHLIGHT)
+    defaultButton.configure(activebackground=PRVHIGHLIGHT)
+
+def default_col():
+    root.configure(bg=BACKGROUND)
+    passwDisplay.configure(bg=BACKGROUND)
+    lengthDescriber.configure(bg=BACKGROUND)
+    GenButton.configure(bg=BACKGROUND)
+    origButton.configure(bg=BACKGROUND)
+    defaultButton.configure(bg=BACKGROUND)
+    origButton.configure(fg=FOREGROUND)
+    GenButton.configure(fg=FOREGROUND)
+    lengthDescriber.configure(fg=FOREGROUND)
+    passwDisplay.configure(fg=FOREGROUND)
+    defaultButton.configure(fg=FOREGROUND)
+    GenButton.configure(activebackground=HIGHLIGHT)
+    origButton.configure(activebackground=HIGHLIGHT)
+    defaultButton.configure(activebackground=HIGHLIGHT)
+
 # Set our window
 root = tk.Tk()
 # Apparently you can't set a background image on widgets such as buttons without replacing text
@@ -75,16 +119,6 @@ passwDisplay = tk.Label(
 passwDisplay.place(anchor="n", relx=0.5, rely=0.06, relwidth=1)
 passwDisplay["font"] = 10
 
-# Button for generation
-genButton = tk.Button(
-    root, text="Generate Password",
-    bd=2, bg=BACKGROUND, fg=FOREGROUND,
-    command=gen_passw, activebackground=HIGHLIGHT,
-    activeforeground=FOREGROUND, relief=BORD
-    )
-genButton["font"] = font.Font(size=16)
-genButton.place(anchor="n", relx=0.5, rely=0.5, relwidth=1, relheight=0.48)
-
 # Custom length entry & label
 lengthInput = tk.Entry(root, bg="#FFFFFF", width=22)
 lengthInput.place(anchor="n", relx=0.5, rely=0.28, relwidth=0.30, relheight=0.16)
@@ -96,13 +130,28 @@ lengthDescriber = tk.Label(
     )
 lengthDescriber.place(anchor="w", relx=0.020, rely=0.36, relwidth=0.33, relheight=0.16)
 
-# Confirm button for length of password
-customGenButton = tk.Button(
+# Generate button
+GenButton = tk.Button(
     root, bd=2, bg=BACKGROUND, fg=FOREGROUND,
-    text="Generate (Custom)", command=custom_len_gen,
+    text="Generate", command=custom_len_gen,
     width=19, activebackground=HIGHLIGHT,
     activeforeground=FOREGROUND, relief=BORD
     )
-customGenButton.place(anchor="e", relx=0.98, rely=0.36, relwidth=0.33, relheight=0.16)
+GenButton.place(anchor="e", relx=0.98, rely=0.36, relwidth=0.33, relheight=0.16)
+
+# Button to change color scheme to orignal colors!
+origButton = tk.Button(
+    root, bg=BACKGROUND, fg=FOREGROUND,
+    text="Preview new colors (tell me what you think)", command=orig_col,
+    relief=BORD, wraplength=200, activebackground=HIGHLIGHT
+    )
+origButton.place(anchor="e", relx=0.5, rely=0.75, relwidth=0.5, relheight=0.48)
+# Button to change to default colors
+defaultButton = tk.Button(
+    root, bg=BACKGROUND, fg=FOREGROUND,
+    text="Back to default colors", command=default_col,
+    relief=BORD, wraplength=200, activebackground=HIGHLIGHT
+    )
+defaultButton.place(anchor="w", relx=0.5, rely=0.75, relwidth=0.5, relheight=0.48)
 
 root.mainloop()
