@@ -20,15 +20,14 @@ def custom_len_gen():
             gen_pass()
         else:
             gen_pass(int(userLength))
-    except Exception:
+    except Exception as e:
         if userLength == "":
             gen_pass()
         else:
-            passDisplay.config(text="Please enter a valid number. Cannot be >20 or <8")
-            f = open("log.txt", "a")
-            print(f"User entered '{lengthInput.get()}'")
-            f.write(f"User entered '{lengthInput.get()}'\n")
-            f.close()
+            logFile = open("log.txt", "a")
+            logFile.write(f"Error: {e}\n\n")
+            logFile.close()
+            gen_pass()
 
 def font_resize(event):
     if event.width in range(420, 800):
@@ -55,9 +54,9 @@ root = tk.Tk()
 # Apparently you can't set a background image on widgets such as buttons without replacing text
 # BGIMAGE = tk.PhotoImage("C:\\Users\\melis\\Desktop\\Python\\Password_Gen\\Possible icons\\starrynight.jpg")
 root.title("Pins Password Generator - Credit to Saucy")
-root.geometry("420x101") # originally 250x150
+root.geometry("420x150") # originally 250x150
 root.iconphoto(False, tk.PhotoImage(
-    file='C:\\Users\\melis\\Desktop\\Python\\Password_Gen\\Possible icons\\breadpensive1.ico')
+    file='C:\\Users\\melis\\Pictures\\Saved pictures\\Icons\\Espers Pinwheel.ico')
     )
 root.bind("<Configure>", font_resize)
 #root.resizable(width=0, height=0)
@@ -67,7 +66,10 @@ frameName = tk.Frame(root, height=101, width=420   , bg=BACKGROUND)
 frameName.place(relheight=1, relwidth=1)
 
 # Label for password
-passDisplay = tk.Label(root, text="Your password will appear here!", bg=BACKGROUND, fg=FOREGROUND)
+passDisplay = tk.Label(
+    root, text="Password appears here (Character limit of 8-20)",
+     bg=BACKGROUND, fg=FOREGROUND
+     )
 passDisplay.place(anchor="n", relx=0.5, relwidth=1)
 passDisplay["font"] = 10
 
@@ -96,6 +98,6 @@ customGen = tk.Button(
     width=19, activebackground=HIGHLIGHT,
     activeforeground=FOREGROUND
     )
-customGen.place(anchor="e", relx=0.999, rely=0.36, relwidth=0.34, relheight=0.16)
+customGen.place(anchor="e", relx=0.999, rely=0.355, relwidth=0.34, relheight=0.16)
 
 root.mainloop()
