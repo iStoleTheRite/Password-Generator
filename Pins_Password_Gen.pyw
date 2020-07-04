@@ -43,7 +43,7 @@ def font_resize(event):
         GenButton["font"] = font.Font(size=10)
         lengthDescriber["font"] = font.Font(size=10)
         lengthInput["font"] = font.Font(size=8)
-        origButton["font"] = font.Font(size=8)
+        prevButton["font"] = font.Font(size=8)
         defaultButton["font"] = font.Font(size=8)
     elif event.width in range(620, 820):
         #genButton["font"] = font.Font(size=16)
@@ -51,7 +51,7 @@ def font_resize(event):
         GenButton["font"] = font.Font(size=18)
         lengthDescriber["font"] = font.Font(size=15)
         lengthInput["font"] = font.Font(size=18)
-        origButton["font"] = font.Font(size=18)
+        prevButton["font"] = font.Font(size=18)
         defaultButton["font"] = font.Font(size=18)
     elif event.width > 820:
         #genButton["font"] = font.Font(size=32)
@@ -59,7 +59,7 @@ def font_resize(event):
         GenButton["font"] = font.Font(size=18)
         lengthDescriber["font"] = font.Font(size=16)
         lengthInput["font"] = font.Font(size=20)
-        origButton["font"] = font.Font(size=20)
+        prevButton["font"] = font.Font(size=20)
         defaultButton["font"] = font.Font(size=20)
 
 def orig_col():
@@ -67,15 +67,15 @@ def orig_col():
     passwDisplay.configure(bg=PRVBACKGROUND)
     lengthDescriber.configure(bg=PRVBACKGROUND)
     GenButton.configure(bg=PRVBACKGROUND)
-    origButton.configure(bg=PRVBACKGROUND)
+    prevButton.configure(bg=PRVBACKGROUND)
     defaultButton.configure(bg=PRVBACKGROUND)
-    origButton.configure(fg=PRVFOREGROUND)
+    prevButton.configure(fg=PRVFOREGROUND)
     GenButton.configure(fg=PRVFOREGROUND)
     lengthDescriber.configure(fg=PRVFOREGROUND)
     passwDisplay.configure(fg=PRVFOREGROUND)
     defaultButton.configure(fg=PRVFOREGROUND)
     GenButton.configure(activebackground=PRVHIGHLIGHT)
-    origButton.configure(activebackground=PRVHIGHLIGHT)
+    prevButton.configure(activebackground=PRVHIGHLIGHT)
     defaultButton.configure(activebackground=PRVHIGHLIGHT)
 
 def default_col():
@@ -83,15 +83,15 @@ def default_col():
     passwDisplay.configure(bg=BACKGROUND)
     lengthDescriber.configure(bg=BACKGROUND)
     GenButton.configure(bg=BACKGROUND)
-    origButton.configure(bg=BACKGROUND)
+    prevButton.configure(bg=BACKGROUND)
     defaultButton.configure(bg=BACKGROUND)
-    origButton.configure(fg=FOREGROUND)
+    prevButton.configure(fg=FOREGROUND)
     GenButton.configure(fg=FOREGROUND)
     lengthDescriber.configure(fg=FOREGROUND)
     passwDisplay.configure(fg=FOREGROUND)
     defaultButton.configure(fg=FOREGROUND)
     GenButton.configure(activebackground=HIGHLIGHT)
-    origButton.configure(activebackground=HIGHLIGHT)
+    prevButton.configure(activebackground=HIGHLIGHT)
     defaultButton.configure(activebackground=HIGHLIGHT)
 
 # Set our window
@@ -102,7 +102,7 @@ root.title("Pins Password Generator - Credit to Saucy")
 root.geometry(WINGEOMETRY)
 root.configure(bg=BACKGROUND)
 # root.iconphoto(False, tk.PhotoImage(
-#     file='/Icons/Espers Pinwheel.ico') # Needs fixing
+#     file='C:\\Users\\melis\\Desktop\\Python\\Password_Gen\\Icons\\Espers Pinwheel.ico')  # Needs fixing
 #     )
 root.bind("<Configure>", font_resize)
 #root.resizable(width=0, height=0)
@@ -139,13 +139,13 @@ GenButton = tk.Button(
     )
 GenButton.place(anchor="e", relx=0.98, rely=0.36, relwidth=0.33, relheight=0.16)
 
-# Button to change color scheme to orignal colors!
-origButton = tk.Button(
+# Button to change color scheme to preview colors!
+prevButton = tk.Button(
     root, bg=BACKGROUND, fg=FOREGROUND,
     text="Preview new colors (tell me what you think)", command=orig_col,
     relief=BORD, wraplength=200, activebackground=HIGHLIGHT
     )
-origButton.place(anchor="e", relx=0.5, rely=0.75, relwidth=0.5, relheight=0.48)
+prevButton.place(anchor="e", relx=0.5, rely=0.75, relwidth=0.5, relheight=0.48)
 # Button to change to default colors
 defaultButton = tk.Button(
     root, bg=BACKGROUND, fg=FOREGROUND,
