@@ -7,7 +7,7 @@ BACKGROUND = "#FFFFFF"  # Original color: E9E6FF, FFFFFF
 FOREGROUND = "#3B413C"  # Original color: 706993, 3B413C
 HIGHLIGHT = "#D6D6D6"  # Original color: 43484B, D6D6D6
 WINGEOMETRY = "420x150+730+350"  # WidthxHeight+X+Y
-BUTTONBORD = "groove"
+BORD = "groove"
 
 def gen_passw(length=8, text=f" has been copied to clipboard"):
     options = ascii_uppercase + ascii_lowercase + digits + punctuation
@@ -80,7 +80,7 @@ genButton = tk.Button(
     root, text="Generate Password",
     bd=2, bg=BACKGROUND, fg=FOREGROUND,
     command=gen_passw, activebackground=HIGHLIGHT,
-    activeforeground=FOREGROUND, relief=BUTTONBORD
+    activeforeground=FOREGROUND, relief=BORD
     )
 genButton["font"] = font.Font(size=16)
 genButton.place(anchor="n", relx=0.5, rely=0.5, relwidth=1, relheight=0.48)
@@ -90,16 +90,19 @@ lengthInput = tk.Entry(root, bg="#FFFFFF", width=22)
 lengthInput.place(anchor="n", relx=0.5, rely=0.28, relwidth=0.30, relheight=0.16)
 
 # Label for Entry.
-lengthDescriber = tk.Label(root, bg=BACKGROUND, fg=FOREGROUND, width=18, text="Enter a desired length: ")
-lengthDescriber.place(anchor="w", relx=0.020, rely=0.345, relwidth=0.33, relheight=0.18)
+lengthDescriber = tk.Label(
+    root, bg=BACKGROUND, fg=FOREGROUND, width=18,
+    text="Enter a desired length: ", relief=BORD,
+    )
+lengthDescriber.place(anchor="w", relx=0.020, rely=0.36, relwidth=0.33, relheight=0.16)
 
 # Confirm button for length of password
 customGenButton = tk.Button(
     root, bd=2, bg=BACKGROUND, fg=FOREGROUND,
     text="Generate (Custom)", command=custom_len_gen,
     width=19, activebackground=HIGHLIGHT,
-    activeforeground=FOREGROUND, relief=BUTTONBORD
+    activeforeground=FOREGROUND, relief=BORD
     )
-customGenButton.place(anchor="e", relx=0.999, rely=0.36, relwidth=0.34, relheight=0.16)
+customGenButton.place(anchor="e", relx=0.98, rely=0.36, relwidth=0.33, relheight=0.16)
 
 root.mainloop()
