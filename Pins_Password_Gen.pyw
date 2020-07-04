@@ -5,7 +5,7 @@ import tkinter.font as font
 import pyperclip as pclip
 BACKGROUND = "#FFFFFF"  # Original color: E9E6FF, FFFFFF
 FOREGROUND = "#3B413C"  # Original color: 706993, 3B413C
-HIGHLIGHT = "#D6D6D6"  # Original color: 43484B, D6D6D6
+HIGHLIGHT = "#D6D6D6"  # Original color: NONE, D6D6D6
 WINGEOMETRY = "420x150+730+350"  # WidthxHeight+X+Y
 BORD = "groove"
 
@@ -57,9 +57,9 @@ root = tk.Tk()
 root.title("Pins Password Generator - Credit to Saucy")
 root.geometry(WINGEOMETRY)
 root.configure(bg=BACKGROUND)
-root.iconphoto(False, tk.PhotoImage(
-    file='C:\\Users\\melis\\Pictures\\Saved pictures\\Icons\\Espers Pinwheel.ico')
-    )
+# root.iconphoto(False, tk.PhotoImage(
+#     file='/Icons/Espers Pinwheel.ico') # Needs fixing
+#     )
 root.bind("<Configure>", font_resize)
 #root.resizable(width=0, height=0)
 
