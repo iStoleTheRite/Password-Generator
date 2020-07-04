@@ -19,3 +19,7 @@ while True:
         continue
     else:
         print(print_and_copy_pw(pwLen))
+
+
+
+# No error catching, no checks on length, very rough, basic password generator
