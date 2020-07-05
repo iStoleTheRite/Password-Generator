@@ -44,7 +44,6 @@ def custom_len_gen():
 
 def font_resize(event):
     if event.width in range(420, 620):
-        #genButton["font"] = font.Font(size=16)
         passwDisplay["font"] = font.Font(size=10)
         GenButton["font"] = font.Font(size=10)
         lengthDescriber["font"] = font.Font(size=10)
@@ -52,21 +51,33 @@ def font_resize(event):
         dmButton["font"] = font.Font(size=8)
         defaultButton["font"] = font.Font(size=8)
     elif event.width in range(620, 820):
-        #genButton["font"] = font.Font(size=16)
         passwDisplay["font"] = font.Font(size=14)
         GenButton["font"] = font.Font(size=18)
         lengthDescriber["font"] = font.Font(size=15)
         lengthInput["font"] = font.Font(size=18)
         dmButton["font"] = font.Font(size=18)
         defaultButton["font"] = font.Font(size=18)
-    elif event.width > 820:
-        #genButton["font"] = font.Font(size=32)
+    elif event.width in range(820, 1020):
         passwDisplay["font"] = font.Font(size=18)
         GenButton["font"] = font.Font(size=18)
-        lengthDescriber["font"] = font.Font(size=16)
+        lengthDescriber["font"] = font.Font(size=20)
         lengthInput["font"] = font.Font(size=20)
         dmButton["font"] = font.Font(size=20)
         defaultButton["font"] = font.Font(size=20)
+    elif event.width in range(1020, 1220):
+        passwDisplay["font"] = font.Font(size=22)
+        GenButton["font"] = font.Font(size=22)
+        lengthDescriber["font"] = font.Font(size=25)
+        lengthInput["font"] = font.Font(size=25)
+        dmButton["font"] = font.Font(size=25)
+        defaultButton["font"] = font.Font(size=25)
+    elif event.width > 1220:
+        passwDisplay["font"] = font.Font(size=26)
+        GenButton["font"] = font.Font(size=26)
+        lengthDescriber["font"] = font.Font(size=30)
+        lengthInput["font"] = font.Font(size=30)
+        dmButton["font"] = font.Font(size=30)
+        defaultButton["font"] = font.Font(size=30)
 
 def savetheme(scheme):
     print("Theme changed")
