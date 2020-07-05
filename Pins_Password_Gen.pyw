@@ -1,16 +1,22 @@
 from string import ascii_uppercase, ascii_lowercase, digits, punctuation
+from configparser import ConfigParser
 import random
 import tkinter as tk
 import tkinter.font as font
 import pyperclip as pclip
-BACKGROUND = "#FFFFFF"  # Original color: E9E6FF, FFFFFF
-FOREGROUND = "#3B413C"  # Original color: 706993, 3B413C
-PRVBACKGROUND = "#222725"
-PRVFOREGROUND = "#7D94B5"
-PRVHIGHLIGHT = "#BDD5EA"
-HIGHLIGHT = "#D6D6D6"  # Original color: NONE, D6D6D6
 WINGEOMETRY = "420x150+730+350"  # WidthxHeight+X+Y
 BORD = "groove"
+CFGFILE = "PPGcfg.ini"
+CFG = ConfigParser()
+CFG.read(CFGFILE)
+COLORS = {"bg": "#FFFFFF", "fg": "#3B413C",
+          "hl": "#D6D6D6", "display": "#D6D6D6"}
+          
+if CFG['aesthetic']['theme'] == "dark":
+    COLORS["bg"] = "#222725"
+    COLORS["fg"] = "#7D94B5"
+    COLORS["hl"] = "#BDD5EA"
+    COLORS["display"] = "#39413F"
 
 def gen_passw(length=8, text=f" has been copied to clipboard"):
     options = ascii_uppercase + ascii_lowercase + digits + punctuation
@@ -43,7 +49,7 @@ def font_resize(event):
         GenButton["font"] = font.Font(size=10)
         lengthDescriber["font"] = font.Font(size=10)
         lengthInput["font"] = font.Font(size=8)
-        prevButton["font"] = font.Font(size=8)
+        dmButton["font"] = font.Font(size=8)
         defaultButton["font"] = font.Font(size=8)
     elif event.width in range(620, 820):
         #genButton["font"] = font.Font(size=16)
@@ -51,7 +57,7 @@ def font_resize(event):
         GenButton["font"] = font.Font(size=18)
         lengthDescriber["font"] = font.Font(size=15)
         lengthInput["font"] = font.Font(size=18)
-        prevButton["font"] = font.Font(size=18)
+        dmButton["font"] = font.Font(size=18)
         defaultButton["font"] = font.Font(size=18)
     elif event.width > 820:
         #genButton["font"] = font.Font(size=32)
@@ -59,40 +65,14 @@ def font_resize(event):
         GenButton["font"] = font.Font(size=18)
         lengthDescriber["font"] = font.Font(size=16)
         lengthInput["font"] = font.Font(size=20)
-        prevButton["font"] = font.Font(size=20)
+        dmButton["font"] = font.Font(size=20)
         defaultButton["font"] = font.Font(size=20)
 
-def orig_col():
-    root.configure(bg=PRVBACKGROUND)
-    passwDisplay.configure(bg="#39413F")
-    lengthDescriber.configure(bg=PRVBACKGROUND)
-    GenButton.configure(bg=PRVBACKGROUND)
-    prevButton.configure(bg=PRVBACKGROUND)
-    defaultButton.configure(bg=PRVBACKGROUND)
-    prevButton.configure(fg=PRVFOREGROUND)
-    GenButton.configure(fg=PRVFOREGROUND)
-    lengthDescriber.configure(fg=PRVFOREGROUND)
-    passwDisplay.configure(fg=PRVFOREGROUND)
-    defaultButton.configure(fg=PRVFOREGROUND)
-    GenButton.configure(activebackground=PRVHIGHLIGHT)
-    prevButton.configure(activebackground=PRVHIGHLIGHT)
-    defaultButton.configure(activebackground=PRVHIGHLIGHT)
-
-def default_col():
-    root.configure(bg=BACKGROUND)
-    passwDisplay.configure(bg="#D6D6D6")
-    lengthDescriber.configure(bg=BACKGROUND)
-    GenButton.configure(bg=BACKGROUND)
-    prevButton.configure(bg=BACKGROUND)
-    defaultButton.configure(bg=BACKGROUND)
-    prevButton.configure(fg=FOREGROUND)
-    GenButton.configure(fg=FOREGROUND)
-    lengthDescriber.configure(fg=FOREGROUND)
-    passwDisplay.configure(fg=FOREGROUND)
-    defaultButton.configure(fg=FOREGROUND)
-    GenButton.configure(activebackground=HIGHLIGHT)
-    prevButton.configure(activebackground=HIGHLIGHT)
-    defaultButton.configure(activebackground=HIGHLIGHT)
+def savetheme(scheme):
+    print("Theme changed")
+    CFG.set("aesthetic", "theme", scheme)
+    config = open(CFGFILE, "w")
+    CFG.write(config)
 
 # Set our window
 root = tk.Tk()
@@ -100,7 +80,7 @@ root = tk.Tk()
 # BGIMAGE = tk.PhotoImage("C:\\Users\\melis\\Desktop\\Python\\Password_Gen\\Possible icons\\starrynight.jpg")
 root.title("Pins Password Generator - Credit to Saucy")
 root.geometry(WINGEOMETRY)
-root.configure(bg=BACKGROUND)
+root.configure(bg=COLORS["bg"])
 # root.iconphoto(False, tk.PhotoImage(
 #     file='C:\\Users\\melis\\Desktop\\Python\\Password_Gen\\Icons\\Espers Pinwheel.ico')  # Needs fixing
 #     )
@@ -114,7 +94,7 @@ root.bind("<Configure>", font_resize)
 # Label for password
 passwDisplay = tk.Label(
     root, text="Password appears here (Character limit: 24)",
-    bg="#D6D6D6", fg=FOREGROUND
+    bg=COLORS["display"], fg=COLORS["fg"],
     )
 passwDisplay.place(anchor="n", relx=0.5, rely=0.06, relwidth=1)
 passwDisplay["font"] = 10
@@ -125,32 +105,31 @@ lengthInput.place(anchor="n", relx=0.5, rely=0.28, relwidth=0.33, relheight=0.16
 
 # Label for Entry.
 lengthDescriber = tk.Label(
-    root, bg=BACKGROUND, fg=FOREGROUND, width=16,
+    root, bg=COLORS["bg"], fg=COLORS["fg"], width=16,
     text="Length: ", relief=BORD,
     )
 lengthDescriber.place(anchor="w", relx=0.019, rely=0.36, relwidth=0.31, relheight=0.16)
 
 # Generate button
 GenButton = tk.Button(
-    root, bd=2, bg=BACKGROUND, fg=FOREGROUND,
+    root, bd=2, bg=COLORS["bg"], fg=COLORS["fg"],
     text="Generate", command=custom_len_gen,
-    width=16, activebackground=HIGHLIGHT,
-    activeforeground=FOREGROUND, relief=BORD
+    width=16, activebackground=COLORS["hl"], relief=BORD
     )
 GenButton.place(anchor="e", relx=0.98, rely=0.36, relwidth=0.30, relheight=0.16)
 
-# Button to change color scheme to preview colors!
-prevButton = tk.Button(
-    root, bg=BACKGROUND, fg=FOREGROUND,
-    text="Preview new colors (Placeholder until further updates!)", command=orig_col,
-    relief=BORD, wraplength=200, activebackground=HIGHLIGHT
+# Button to change color scheme to darkmode colors!
+dmButton = tk.Button(
+    root, bg=COLORS["bg"], fg=COLORS["fg"],
+    text="Darkmode (restart to save)", command=lambda: savetheme("dark"),
+    relief=BORD, wraplength=200, activebackground=COLORS["hl"]
     )
-prevButton.place(anchor="e", relx=0.5, rely=0.75, relwidth=0.5, relheight=0.48)
+dmButton.place(anchor="e", relx=0.5, rely=0.75, relwidth=0.5, relheight=0.48)
 # Button to change to default colors
 defaultButton = tk.Button(
-    root, bg=BACKGROUND, fg=FOREGROUND,
-    text="Back to default colors", command=default_col,
-    relief=BORD, wraplength=200, activebackground=HIGHLIGHT
+    root, bg=COLORS["bg"], fg=COLORS["fg"],
+    text="Lightmode (restart to save)", command=lambda: savetheme("light"),
+    relief=BORD, wraplength=200, activebackground=COLORS["hl"]
     )
 defaultButton.place(anchor="w", relx=0.5, rely=0.75, relwidth=0.5, relheight=0.48)
 
