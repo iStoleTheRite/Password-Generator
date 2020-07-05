@@ -22,7 +22,7 @@ def custom_len_gen():
     logFile = open("log.txt", "a")
     userLength = lengthInput.get()
     try:
-        if int(userLength) > 20 or int(userLength) < 8:
+        if int(userLength) > 24:
             logFile.write(f"User tried to use a length of {userLength}\n\n")
             logFile.close()
             gen_passw()
@@ -64,7 +64,7 @@ def font_resize(event):
 
 def orig_col():
     root.configure(bg=PRVBACKGROUND)
-    passwDisplay.configure(bg=PRVBACKGROUND)
+    passwDisplay.configure(bg="#39413F")
     lengthDescriber.configure(bg=PRVBACKGROUND)
     GenButton.configure(bg=PRVBACKGROUND)
     prevButton.configure(bg=PRVBACKGROUND)
@@ -80,7 +80,7 @@ def orig_col():
 
 def default_col():
     root.configure(bg=BACKGROUND)
-    passwDisplay.configure(bg=BACKGROUND)
+    passwDisplay.configure(bg="#D6D6D6")
     lengthDescriber.configure(bg=BACKGROUND)
     GenButton.configure(bg=BACKGROUND)
     prevButton.configure(bg=BACKGROUND)
@@ -113,36 +113,36 @@ root.bind("<Configure>", font_resize)
 
 # Label for password
 passwDisplay = tk.Label(
-    root, text="Password appears here (Character limit of 8-20)",
-     bg=BACKGROUND, fg=FOREGROUND
-     )
+    root, text="Password appears here (Character limit: 24)",
+    bg="#D6D6D6", fg=FOREGROUND
+    )
 passwDisplay.place(anchor="n", relx=0.5, rely=0.06, relwidth=1)
 passwDisplay["font"] = 10
 
 # Custom length entry & label
 lengthInput = tk.Entry(root, bg="#FFFFFF", width=22)
-lengthInput.place(anchor="n", relx=0.5, rely=0.28, relwidth=0.30, relheight=0.16)
+lengthInput.place(anchor="n", relx=0.5, rely=0.28, relwidth=0.33, relheight=0.16)
 
 # Label for Entry.
 lengthDescriber = tk.Label(
-    root, bg=BACKGROUND, fg=FOREGROUND, width=18,
-    text="Enter a desired length: ", relief=BORD,
+    root, bg=BACKGROUND, fg=FOREGROUND, width=16,
+    text="Length: ", relief=BORD,
     )
-lengthDescriber.place(anchor="w", relx=0.020, rely=0.36, relwidth=0.33, relheight=0.16)
+lengthDescriber.place(anchor="w", relx=0.019, rely=0.36, relwidth=0.31, relheight=0.16)
 
 # Generate button
 GenButton = tk.Button(
     root, bd=2, bg=BACKGROUND, fg=FOREGROUND,
     text="Generate", command=custom_len_gen,
-    width=19, activebackground=HIGHLIGHT,
+    width=16, activebackground=HIGHLIGHT,
     activeforeground=FOREGROUND, relief=BORD
     )
-GenButton.place(anchor="e", relx=0.98, rely=0.36, relwidth=0.33, relheight=0.16)
+GenButton.place(anchor="e", relx=0.98, rely=0.36, relwidth=0.30, relheight=0.16)
 
 # Button to change color scheme to preview colors!
 prevButton = tk.Button(
     root, bg=BACKGROUND, fg=FOREGROUND,
-    text="Preview new colors (tell me what you think)", command=orig_col,
+    text="Preview new colors (Placeholder until further updates!)", command=orig_col,
     relief=BORD, wraplength=200, activebackground=HIGHLIGHT
     )
 prevButton.place(anchor="e", relx=0.5, rely=0.75, relwidth=0.5, relheight=0.48)
