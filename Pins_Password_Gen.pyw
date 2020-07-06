@@ -9,6 +9,16 @@ BORD = "groove"
 CFGFILE = "PPGcfg.ini"
 CFG = ConfigParser()
 CFG.read(CFGFILE)
+# Check if config file exists, if it doesn't create it and add proper section.
+if not CFG.read(CFGFILE):
+    print("Creating file...")
+    with open(CFGFILE, "w") as config:
+        CFG.add_section("aesthetic")
+        CFG.set("aesthetic", "theme", "light")
+        CFG.write(config)
+else:
+    pass
+
 # Default colors (Light mode)
 colors = {"bg": "#FFFFFF", "fg": "#3B413C",
           "hl": "#D6D6D6", "display": "#D6D6D6"}
