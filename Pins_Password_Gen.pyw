@@ -23,39 +23,47 @@ else:
 colors = {"bg": "#FFFFFF", "fg": "#3B413C",
           "hl": "#D6D6D6", "display": "#D6D6D6"}
 
+# Checks config file to see if darkmode was the last theme saved, if it was, change colors to darkmode colors.
 if CFG['aesthetic']['theme'] == "dark":
     colors["bg"] = "#222725"
     colors["fg"] = "#C2FCF7"
     colors["hl"] = "#7D94B5"
     colors["display"] = "#39413F"
 
-def gen_passw(length=8, text=f" copied to clipboard"):
+# Generates the password using uppcase, lowercase letts along with digits and punctuation;
+# copies password to clipboard.
+def generate_and_copy(length=8, text=f" copied to clipboard"):
     options = ascii_uppercase + ascii_lowercase + digits + punctuation
     generatedPW = "".join(random.choice(options) for _ in range(length))
     pclip.copy(generatedPW)
     passwDisplay.config(text=f"{generatedPW}"+text)
 
-def custom_len_gen():
+# If they decide to generate the 
+def get_len_and_generate():
     logFile = open("log.txt", "a")
     userLength = lengthInput.get()
     try:
         if int(userLength) > 24:
-            logFile.write(f"User tried to use a length of {userLength}\n\n")
+            logFile.write(f"User tried to use a length of {userLength}\n")
             logFile.close()
-            gen_passw()
+            generate_and_copy(text=f""" generated using default length of 8. Length cannot exceed 24 characters.""")
         else:
-            gen_passw(int(userLength))
+            generate_and_copy(int(userLength))
     except Exception as e:
         if userLength == "":
-            gen_passw()
+            generate_and_copy()
         else:
             logFile.write(f"Error: {e}\n")
             logFile.close()
-            gen_passw(text=" has been copied to clipboard using default length (8)")
+            generate_and_copy(
+                text=f""" generated using default of length 8 ("{userLength[:11]}"... is not a valid input.)"""
+                )
 
+# Resizes font along with widow width
 def font_resize(event):
     if event.width in range(420, 620):
         passwDisplay["font"] = font.Font(size=10)
+        passwDisplay.config(wraplength=300)
         GenButton["font"] = font.Font(size=10)
         lengthDescriber["font"] = font.Font(size=10)
         lengthInput["font"] = font.Font(size=8)
@@ -63,6 +71,7 @@ def font_resize(event):
         lmButton["font"] = font.Font(size=8)
     elif event.width in range(620, 820):
         passwDisplay["font"] = font.Font(size=14)
+        passwDisplay.config(wraplength=400)
         GenButton["font"] = font.Font(size=18)
         lengthDescriber["font"] = font.Font(size=15)
         lengthInput["font"] = font.Font(size=18)
@@ -70,6 +79,7 @@ def font_resize(event):
         lmButton["font"] = font.Font(size=18)
     elif event.width in range(820, 1020):
         passwDisplay["font"] = font.Font(size=18)
+        passwDisplay.config(wraplength=500)
         GenButton["font"] = font.Font(size=18)
         lengthDescriber["font"] = font.Font(size=20)
         lengthInput["font"] = font.Font(size=20)
@@ -77,6 +87,7 @@ def font_resize(event):
         lmButton["font"] = font.Font(size=20)
     elif event.width in range(1020, 1220):
         passwDisplay["font"] = font.Font(size=22)
+        passwDisplay.config(wraplength=600)
         GenButton["font"] = font.Font(size=22)
         lengthDescriber["font"] = font.Font(size=25)
         lengthInput["font"] = font.Font(size=25)
@@ -84,12 +95,14 @@ def font_resize(event):
         lmButton["font"] = font.Font(size=25)
     elif event.width > 1220:
         passwDisplay["font"] = font.Font(size=34)
+        passwDisplay.config(wraplength=900)
         GenButton["font"] = font.Font(size=26)
         lengthDescriber["font"] = font.Font(size=30)
         lengthInput["font"] = font.Font(size=30)
         dmButton["font"] = font.Font(size=30)
         lmButton["font"] = font.Font(size=30)
 
+# Saves the current theme along with changing the current color scheme to the opposite of what is already selected
 def savetheme(scheme):
     print(f"Theme changed to {scheme}")
     passwDisplay.config(text=f"{scheme.capitalize()} theme selected and saved")
@@ -99,7 +112,7 @@ def savetheme(scheme):
     if scheme == "dark":
         root.after(0, lambda: root.config(bg="#222725"))
         passwDisplay.after(0, lambda: passwDisplay.config(bg="#39413F", fg="#C2FCF7"))
-        lengthInput.after(0, lambda: lengthInput.config(bg="#222725", fg="#C2FCF7"))
+        lengthInput.after(0, lambda: lengthInput.config(bg="#FFFFFF", fg="#C2FCF7"))
         lengthDescriber.after(0, lambda: lengthDescriber.config(bg="#222725", fg="#C2FCF7"))
         GenButton.after(0, lambda: GenButton.config(bg="#222725", fg="#C2FCF7", activebackground="#7D94B5"))
         dmButton.after(0, lambda: dmButton.config(bg="#222725", fg="#C2FCF7", activebackground="#7D94B5"))
@@ -162,7 +175,7 @@ lengthDescriber.place(anchor="w", relx=0.019, rely=0.36, relwidth=0.31, relheigh
 # Generate button
 GenButton = tk.Button(
     root, bd=2, bg=colors["bg"], fg=colors["fg"],
-    text="Generate", command=custom_len_gen,
+    text="Generate", command=get_len_and_generate,
     width=16, activebackground=colors["hl"], relief=BORD
     )
 GenButton.place(anchor="e", relx=0.98, rely=0.36, relwidth=0.30, relheight=0.16)
