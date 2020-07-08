@@ -112,7 +112,6 @@ def savetheme(scheme):
     if scheme == "dark":
         root.after(0, lambda: root.config(bg="#222725"))
         passwDisplay.after(0, lambda: passwDisplay.config(bg="#39413F", fg="#C2FCF7"))
-        lengthInput.after(0, lambda: lengthInput.config(bg="#FFFFFF", fg="#C2FCF7"))
         lengthDescriber.after(0, lambda: lengthDescriber.config(bg="#222725", fg="#C2FCF7"))
         GenButton.after(0, lambda: GenButton.config(bg="#222725", fg="#C2FCF7", activebackground="#7D94B5"))
         dmButton.after(0, lambda: dmButton.config(bg="#222725", fg="#C2FCF7", activebackground="#7D94B5"))
@@ -120,7 +119,6 @@ def savetheme(scheme):
     elif scheme =="light":
         root.after(0, lambda: root.config(bg="#FFFFFF"))
         passwDisplay.after(0, lambda: passwDisplay.config(bg="#D6D6D6", fg="#3B413C"))
-        lengthInput.after(0, lambda: lengthInput.config(bg="#FFFFFF", fg="#3B413C"))
         lengthDescriber.after(0, lambda: lengthDescriber.config(bg="#FFFFFF", fg="#3B413C"))
         GenButton.after(0, lambda: GenButton.config(bg="#FFFFFF", fg="#3B413C", activebackground="#D6D6D6"))
         dmButton.after(0, lambda: dmButton.config(bg="#FFFFFF", fg="#3B413C", activebackground="#D6D6D6"))
