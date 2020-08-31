@@ -116,6 +116,7 @@ def savetheme(scheme):
         GenButton.after(0, lambda: GenButton.config(bg="#222725", fg="#C2FCF7", activebackground="#7D94B5"))
         dmButton.after(0, lambda: dmButton.config(bg="#222725", fg="#C2FCF7", activebackground="#7D94B5"))
         lmButton.after(0, lambda: lmButton.config(bg="#222725", fg="#C2FCF7", activebackground="#7D94B5"))
+        lengthInput.after(0, lambda: lengthInput.config(bg="#39413F"))
     elif scheme =="light":
         root.after(0, lambda: root.config(bg="#FFFFFF"))
         passwDisplay.after(0, lambda: passwDisplay.config(bg="#D6D6D6", fg="#3B413C"))
@@ -123,6 +124,7 @@ def savetheme(scheme):
         GenButton.after(0, lambda: GenButton.config(bg="#FFFFFF", fg="#3B413C", activebackground="#D6D6D6"))
         dmButton.after(0, lambda: dmButton.config(bg="#FFFFFF", fg="#3B413C", activebackground="#D6D6D6"))
         lmButton.after(0, lambda: lmButton.config(bg="#FFFFFF", fg="#3B413C", activebackground="#D6D6D6"))
+        lengthInput.after(0, lambda: lengthInput.config(bg="#D6D6D6"))
 
 # Set our window
 root = tk.Tk()
@@ -159,8 +161,8 @@ passwDisplay = tk.Label(
 passwDisplay.place(anchor="n", relx=0.5, rely=0.06, relwidth=1)
 passwDisplay["font"] = 10
 
-# Custom length entry & label
-lengthInput = tk.Entry(root, bg="#FFFFFF", width=22)
+# Custom length entry
+lengthInput = tk.Entry(root, bg=colors["display"], width=22)
 lengthInput.place(anchor="n", relx=0.5, rely=0.28, relwidth=0.33, relheight=0.16)
 
 # Label for Entry.
